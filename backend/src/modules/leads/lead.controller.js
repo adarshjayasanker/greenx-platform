@@ -1,5 +1,5 @@
-import asyncHandler from "../../utils/asyncHandler";
-import { createLead, deleteLead, getAllLeads, updateLead } from "./lead.service";
+import asyncHandler from "../../utils/asyncHandler.js";
+import { createLead, deleteLead, getAllLeads, updateLead } from "./lead.service.js";
 
 const leadController = {
 

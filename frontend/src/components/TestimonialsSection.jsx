@@ -2,6 +2,8 @@ import {Swiper, SwiperSlide} from 'swiper/react';
 import {Autoplay, Pagination} from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
+import { useState } from 'react';
+import TestimonialModal from './TestimonialModal';
 
 const testimonials = [
         {
@@ -43,8 +45,12 @@ const testimonials = [
 
 
 const TestimonialsSection = () => {
+    const [openModal, setOpenModal] = useState(false);
+    console.log(openModal);
+    
+    if(openModal) return <TestimonialModal isOpen={true} onClose={() => setOpenModal(false)}/>
     return(
-        <section className="py-24 bg-gradient-to-b from-green-400 to-white">
+        <section className="py-24 bg-gradient-to-b from-white to-green-400">
             <div className="max-w-6xl mx-auto px-6 text-center">
                 <h2 className="text-3xl font-bold text-gray-900">What Our Customers Say</h2>
                 <p className='text-gray-600 mt-3'>Trusted by Homes and Businesses across Kerala</p>
@@ -77,6 +83,9 @@ const TestimonialsSection = () => {
                         ))}
                     </Swiper>
                 </div>
+            </div>
+            <div className='text-center mt-10'>
+                <button onClick={() => setOpenModal(true)} className='bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700'>Leave a Review</button>
             </div>
         </section>
         

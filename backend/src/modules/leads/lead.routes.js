@@ -1,8 +1,8 @@
 import express from 'express';
-import createValidation from './lead.validation';
-import validate from '../../middleware/validateMiddleware';
-import leadController from './lead.controller';
-import protect from '../../middleware/authMiddleware';
+import createValidation from './lead.validation.js';
+import validate from '../../middleware/validateMiddleware.js';
+import leadController from './lead.controller.js';
+import protect from '../../middleware/authMiddleware.js';
 const {createLead, updateLead, getLeads, deleteLead} = leadController;
 
 const leadRoutes = express.Router();

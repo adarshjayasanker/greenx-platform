@@ -1,5 +1,5 @@
-import asyncHandler from "../../utils/asyncHandler";
-import { approveTestimonial, deleteTestimonial, getAllTestimonials, getApprovedTestimonials, submitTestimonial } from "./testimonial.service";
+import asyncHandler from "../../utils/asyncHandler.js";
+import { approveTestimonial, deleteTestimonial, getAllTestimonials, getApprovedTestimonials, submitTestimonial } from "./testimonial.service.js";
 
 const testimonialControllers = {
 
@@ -32,4 +32,6 @@ const testimonialControllers = {
         await deleteTestimonial(req.params.id);
         res.json({message: "Testimonial deleted"});
     })
-}
+};
+
+export default testimonialControllers;

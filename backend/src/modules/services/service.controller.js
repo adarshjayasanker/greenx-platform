@@ -1,5 +1,5 @@
-import asyncHandler from "../../utils/asyncHandler";
-import { createService, deleteService, getAllServices, getServiceBySlug, updateService } from "./service.service";
+import asyncHandler from "../../utils/asyncHandler.js";
+import { createService, deleteService, getAllServices, getServiceBySlug, updateService } from "./service.service.js";
 
 const serviceControllers = {
 

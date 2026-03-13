@@ -1,4 +1,4 @@
-import Lead from "./lead.model";
+import Lead from "./lead.model.js";
 
 export const createLead = async(data) => {
     return await Lead.create(data);

@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import GoogleRating from "./GoogleRating";
 
 const Hero = () => {
     return(
@@ -14,6 +15,7 @@ const Hero = () => {
                         <Link to='/request-service' className='bg-green-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-green-700'>Request Inspection</Link>
                         <Link to='/services' className="border border-green-600 text-green-600 px-6 py-3 rounded-lg font-medium hover:bg-green-100">View Services</Link>
                     </div>
+                    <GoogleRating/>
                 </div>
                 <div>
                     <img src="https://images.unsplash.com/photo-1581578731548-c64695cc6952" alt="Pest Control Service" className="rounded-lg shadow-lg" />

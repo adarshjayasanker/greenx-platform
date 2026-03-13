@@ -1,4 +1,4 @@
-import Testimonial from "./testimonial.model"
+import Testimonial from "./testimonial.model.js"
 
 export const submitTestimonial = async(data) => {
     return await Testimonial.create(data);

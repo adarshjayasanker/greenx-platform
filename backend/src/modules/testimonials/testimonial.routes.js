@@ -1,5 +1,7 @@
 import express from 'express';
-import protect from '../../middleware/authMiddleware';
+import protect from '../../middleware/authMiddleware.js';
+import testimonialControllers from './testimonial.controller.js'
+const {submitTestimonial, getApprovedTestimonials, getAllTestimonials, approveTestimonial, deleteTestimonial} = testimonialControllers;
 
 const testimonialRouter = express.Router();
 
