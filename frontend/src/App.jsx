@@ -7,6 +7,7 @@ import Login from "./pages/admin/Login.jsx";
 import AdminLayout from "./layouts/AdminLayout.jsx";
 import ProtectedRoute from "./components/admin/ProtectedRoute.jsx";
 import Dashboard from "./pages/admin/Dashboard.jsx";
+import ServiceManager from "./pages/admin/ServiceManager.jsx";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <AdminLayout/>
         </ProtectedRoute>}>
         <Route path="/admin" element={<Dashboard/>}/>
+        <Route path="/admin/services" element={<ServiceManager/>}/>
       </Route>
 
       <Route path="/login" element={<Login/>}/> 

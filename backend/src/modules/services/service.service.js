@@ -1,11 +1,14 @@
 import Service from "./service.model.js";
 
-export const createService = async(data) => {
-    return await Service.create(data);
+export const createServiceFn = async(data) => {
+    const newService = await Service.create(data);
+    console.log(newService);
+    return newService;
 };
 
-export const getAllServices = async() => {
-    return (await Service.find()).toSorted({createdAt: -1});
+export const getAllServicesFn = async() => {
+    const services = await Service.find({});
+    return services;
 };
 
 export const getServiceBySlug = async(slug) => {

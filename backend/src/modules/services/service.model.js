@@ -3,7 +3,8 @@ import mongoose from 'mongoose';
 const serviceSchema = new mongoose.Schema({
     title: {
         type: String,
-        required: true
+        required: true,
+        trim: true
     },
     slug: {
         type: String,
@@ -11,17 +12,19 @@ const serviceSchema = new mongoose.Schema({
         unique: true
     },
     shortDescription: {
-        type: String
+        type: String,
+        required: true
     },
     fullDescription: {
-        type: String
+        type: String,
+        required: true
     },
     heroImage: {
         type: String,
     },
-    galleryImages: {
-        type: [String]
-    },
+    galleryImages: [
+        {type: String}
+    ],
     featured: {
         type: Boolean,
         default: false
