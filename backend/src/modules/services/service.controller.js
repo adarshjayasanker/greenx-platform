@@ -1,6 +1,6 @@
 import asyncHandler from "../../utils/asyncHandler.js";
 import uploadToCloudinary from "../../utils/uploadToCloudinary.js";
-import { createServiceFn, deleteService, getAllServicesFn, getServiceBySlug, updateService } from "./service.service.js";
+import { createServiceFn, deleteService, getAllServicesFn, getServiceBySlug, updateServiceFn } from "./service.service.js";
 
 const serviceControllers = {
 
@@ -61,7 +61,7 @@ const serviceControllers = {
     }),
 
     updateService: asyncHandler(async(req, res) => {
-        const service = await updateService(req.params.id, req.body);
+        const service = await updateServiceFn(req.params.id, req.body, req.files);
         res.json(service);
     }),
 
