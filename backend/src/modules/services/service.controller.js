@@ -61,6 +61,7 @@ const serviceControllers = {
     }),
 
     updateService: asyncHandler(async(req, res) => {
+        console.log(req.files);
         const service = await updateServiceFn(req.params.id, req.body, req.files);
         res.json(service);
     }),

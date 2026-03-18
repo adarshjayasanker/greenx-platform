@@ -13,7 +13,7 @@ const Hero = () => {
                     </p>
                     <div className="mt-8 flex gap-4">
                         <Link to='/request-service' className='bg-green-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-green-700'>Request Inspection</Link>
-                        <Link to='/contact' className="border border-green-600 text-green-600 px-6 py-3 rounded-lg font-medium hover:bg-green-100">Contact Us</Link>
+                        <Link to='/contacte' className="border border-green-600 text-green-600 px-6 py-3 rounded-lg font-medium hover:bg-green-100">Contact Us</Link>
                     </div>
                     <GoogleRating/>
                 </div>

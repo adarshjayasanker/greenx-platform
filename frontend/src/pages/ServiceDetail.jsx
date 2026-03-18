@@ -13,7 +13,7 @@ const ServiceDetail = () => {
 
     const fetchService = async() => {
         try{
-           const result = await fetch(`http://localhost:5000/services/${slug}`);
+           const result = await fetch(`http://localhost:5000/services/slug/${slug}`);
            if(result.ok){
             const data = await result.json();
             setService(data);

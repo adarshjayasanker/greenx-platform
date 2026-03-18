@@ -29,7 +29,7 @@ export const updateServiceFn = async(id, data, files) => {
     }
     service.galleryImages = service.galleryImages.filter(img => !parsed.includes(img));
    }
-   if(files.heroImage){
+   if(files?.heroImage){
     if(service.heroImage){
         const publicId = service.heroImage.split('/').slice(-2).join('/').split('.')[0];
         await cloudinary.uploader.destroy(publicId);

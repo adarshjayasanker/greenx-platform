@@ -10,7 +10,7 @@ const PublicLayout = () => {
     const [services, setServices] = useState([]);
     const fetchServices = async() => {
         try{
-           const res = await fetch('http://localhost:5000/services/showservices'); 
+           const res = await fetch('http://localhost:5000/services'); 
            if(res?.ok){
             const data = await res.json();
             setServices(data?.services);

@@ -6,10 +6,10 @@ const {submitTestimonial, getApprovedTestimonials, getAllTestimonials, approveTe
 const testimonialRouter = express.Router();
 
 testimonialRouter.post('/submit', submitTestimonial);
-testimonialRouter.get('/getapprovedtestimonials', getApprovedTestimonials);
+testimonialRouter.get('/', getApprovedTestimonials);
 
-testimonialRouter.get('/showall', protect, getAllTestimonials);
-testimonialRouter.patch('/:id/approve', protect, approveTestimonial);
-testimonialRouter.delete('/:id', protect, deleteTestimonial);
+testimonialRouter.get('/all', protect, getAllTestimonials);
+testimonialRouter.patch('/:id', protect, approveTestimonial);
+testimonialRouter.delete('/remove/:id', protect, deleteTestimonial);
 
 export default testimonialRouter;

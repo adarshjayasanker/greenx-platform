@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const generateSlug = (text) => {
     return text.toLowerCase().trim().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
 }
 
-const ServiceForm = ({onSuccess}) => {
+const ServiceForm = ({onSuccess, existingService}) => {
+
     const [formData, setFormData] = useState({
         title: "",
         slug: "",
@@ -14,31 +15,57 @@ const ServiceForm = ({onSuccess}) => {
         galleryImages: [],
         featured: false
     });
+
     const [heroPreview, setHeroPreview] = useState(null);
     const [galleryPreview, setGalleryPreview] = useState([]);
+    const [removedImages, setRemovedImages] = useState([]);
+
+    useEffect(() => {
+        if(existingService){
+            setFormData({
+                title: existingService.title || '',
+                slug: existingService.slug || '',
+                shortDescription: existingService.shortDescription || '',
+                fullDescription: existingService.fullDescription || '',
+                heroImage: null,
+                galleryImages: [],
+                featured: existingService.featured || false
+            });
+            setHeroPreview(existingService.heroImage || null);
+            setGalleryPreview(existingService.galleryImages || null);
+            setRemovedImages([]);
+        }
+    }, [existingService]);
+
+
     const handleTitleChange = (e) => {
         const title = e.target.value;
-        setFormData({
-            ...formData,
+        setFormData(prev => ({
+            ...prev,
             title,
             slug: generateSlug(title)
-        });
-    }
+        }));
+    };
+
     const handleChange = (e) => {
         const {name, value, type, checked} = e.target;
-        setFormData({
-            ...formData,
+        setFormData(prev => ({
+            ...prev,
             [name]: type === 'checkbox' ? checked : value
-        });
-    }
+        }));
+    };
+
     const handleHeroUpload = (e) => {
+        console.log(e.target.files);
         const file = e.target.files[0];
-        setFormData({
-            ...formData,
+        if(!file) return;
+        setFormData(prev => ({
+            ...prev,
             heroImage: file
-        });
+        }));
         setHeroPreview(URL.createObjectURL(file));
     }
+
     const handleGalleryUpload = (e) => {
         const files = Array.from(e.target.files);
         setFormData(prev => ({
@@ -49,40 +76,59 @@ const ServiceForm = ({onSuccess}) => {
         setGalleryPreview(prev => [...prev, ...previews]);
         e.target.value = null;
     }
+
     const removeGalleryImage = (index) => {
+        const removed = galleryPreview[index];
+        if(typeof removed === 'string'){
+            setRemovedImages(prev => [...prev, removed]);
+        }
         setGalleryPreview(prev => prev.filter((_, i) => i !== index));
         setFormData(prev => ({
             ...prev,
             galleryImages: prev.galleryImages.filter((_, i) => i !== index)
-        }))
-    }
+        }));
+    };
+
     const handleSubmit = async(e) => {
         e.preventDefault();
+
         const token = localStorage.getItem('token');
+
         const body = new FormData();
+
         body.append('title', formData.title);
         body.append('slug', formData.slug);
         body.append('shortDescription', formData.shortDescription);
         body.append('fullDescription', formData.fullDescription);
         body.append('featured', formData.featured);
-        body.append('heroImage', formData.heroImage);
+        body.append('removedImages', JSON.stringify(removedImages));
+
+        if(formData.heroImage){
+            body.append('heroImage', formData.heroImage);
+        }
+
         formData.galleryImages.forEach(img => {
             body.append('galleryImages', img);
         });
-        const res = await fetch('http://localhost:5000/services/createservice', {
-            method: 'POST',
+
+        const url = existingService ? `http://localhost:5000/services/${existingService._id}` : `http://localhost:5000/services/createservice`;
+        const method = existingService ? 'PATCH' : 'POST';
+
+        const response = await fetch(url, {
+            method,
             headers: {
                 Authorization: `Bearer ${token}`
             },
             body
         });
-        if(res.ok){
-            alert('service created');
-            if(onSuccess) onSuccess();
+        if(response.ok){
+            alert(existingService ? "Service updated" : "Service created");
+            onSuccess();
         }else{
-            alert('failed to create new service');
+            alert('Operation failed');
         }
-    }
+    };
+
     return(
         <form onSubmit={handleSubmit} className="space-y-5">
             <div>
@@ -95,11 +141,11 @@ const ServiceForm = ({onSuccess}) => {
             </div>
             <div>
                 <label className="block font-medium">Short Description</label>
-                <textarea name="shortDescription" onChange={handleChange} className="border border-gray-300 rounded-md p-2 w-full focus:outline-none focus:ring-2 focus:ring-green-500" rows={3}/>
+                <textarea name="shortDescription" value={formData.shortDescription} onChange={handleChange} className="border border-gray-300 rounded-md p-2 w-full focus:outline-none focus:ring-2 focus:ring-green-500" rows={3}/>
             </div>
             <div>
                 <label className="block font-medium">Full Description</label>
-                <textarea name="fullDescription" onChange={handleChange} className="border border-gray-300 rounded-md p-2 w-full focus:outline-none focus:ring-2 focus:ring-green-500" rows={6}></textarea>
+                <textarea name="fullDescription" value={formData.fullDescription} onChange={handleChange} className="border border-gray-300 rounded-md p-2 w-full focus:outline-none focus:ring-2 focus:ring-green-500" rows={6}></textarea>
             </div>
             <div>
                 <label className="block font-medium">Hero Image</label>
@@ -108,7 +154,7 @@ const ServiceForm = ({onSuccess}) => {
                         <img src={heroPreview} alt="Hero Preview" className="w-full object-cover rounded-md border"/>
                     </div>
                 )}
-                <input type="file" name="heroImage" onChange={handleHeroUpload} className="border border-gray-300 rounded-md p-2 w-full"/>
+                <input type="file" name="heroImage" onChange={handleHeroUpload} className="border mt-2 border-gray-300 rounded-md p-2 w-full"/>
             </div>
             <div>
                 <label className="block font-medium">Gallery Images</label>
@@ -128,7 +174,7 @@ const ServiceForm = ({onSuccess}) => {
                 <input type="checkbox" name="featured" onChange={handleChange}/>
                 <label>Featured Service</label>
             </div>
-            <button className="bg-green-600 hover:bg-green-700 transition text-white px-6 py-2 rounded-md font-medium">Save Service</button>
+            <button className="bg-green-600 hover:bg-green-700 transition text-white px-6 py-2 rounded-md font-medium">{existingService ? 'Update Service' : 'Create Service'}</button>
         </form>
     )
 };

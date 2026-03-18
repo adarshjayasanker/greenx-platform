@@ -6,12 +6,13 @@ import upload from '../../middleware/upload.js';
 
 const serviceRoutes = express.Router();
 
-serviceRoutes.get('/showservices', getServices);
-serviceRoutes.get('/:slug', getService);
+serviceRoutes.patch('/:id', protect, upload.fields([{name: 'heroImage', maxCount: 1}, {name: 'galleryImages', maxCount: 10}]), updateService);
+
+serviceRoutes.get('/', getServices);
+serviceRoutes.get('/slug/:slug', getService);
 
 
 serviceRoutes.post('/createservice', protect, upload.fields([{name: 'heroImage', maxCount: 1}, {name: 'galleryImages', maxCount: 10}]), createService);
-serviceRoutes.patch('/service/:id', protect, upload.fields([{name: 'heroImage', maxCount: 1}, {name: 'galleryImages', maxCount: 10}]), updateService);
-serviceRoutes.delete('/service/:id', protect, deleteService);
+serviceRoutes.delete('/remove/:id', protect, deleteService);
 
 export default serviceRoutes;

@@ -17,10 +17,11 @@ const testimonialSchema = new mongoose.Schema({
         max: 5,
         default: 5
     },
-    approved: {
-        type: Boolean,
-        default: false,
-    },
+    status: {
+        type: String,
+        enum: ['pending', 'approved', 'rejected'],
+        default: 'pending'
+    }
 }, {timestamps: true});
 
 const Testimonial = mongoose.model('Testimonial', testimonialSchema);

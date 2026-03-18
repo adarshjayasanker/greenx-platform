@@ -4,9 +4,10 @@ import ServiceForm from "../../components/admin/ServiceForm";
 const ServiceManager = () => {
     const [services, setServices] = useState([]);
     const [showModal, setShowModal] = useState(false);
+    const [editingService, setEditingService] = useState(null);
     const fetchServices = async() => {
         const token = localStorage.getItem('token');
-        const res = await fetch('http://localhost:5000/services/showservices', {
+        const res = await fetch('http://localhost:5000/services', {
             headers: {
                 Authorization: `Bearer ${token}`
             }
@@ -45,7 +46,7 @@ const ServiceManager = () => {
                             {service.featured ? "Yes" : "No"}
                         </td>
                         <td className="p-3 text-center">
-                            <button className="text-blue-500 mr-4">Edit</button>
+                            <button className="text-blue-500 mr-4" onClick={() => {setEditingService(service); setShowModal(true)}}>Edit</button>
                             <button className="text-red-500">Delete</button>
                         </td>
                     </tr>
@@ -55,11 +56,12 @@ const ServiceManager = () => {
             {showModal && (
             <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 p-6 overflow-y-auto">
                 <div className="bg-white rounded-xl shadow-xl w-full max-w-3xl max-h-[90vh] overflow-y-auto relative p-8">
-                    <button onClick={() => setShowModal(false)} className="absolute top-4 right-4 text-gray-500 hover:text-gray-800">✕</button>
-                    <h2 className="text-xl font-semibold mb-6">Create Service</h2>
-                    <ServiceForm onSuccess={() => {
+                    <button onClick={() => {setShowModal(false); setEditingService(null)}} className="absolute top-4 right-4 text-gray-500 hover:text-gray-800">✕</button>
+                    <h2 className="text-xl font-semibold mb-6">{editingService ? 'Edit Service' : 'Create Service'}</h2>
+                    <ServiceForm existingService={editingService} onSuccess={() => {
                         fetchServices();
                         setShowModal(false);
+                        setEditingService(null);
                     }}/>
                 </div>
             </div>
