@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import ServiceForm from "../../components/admin/ServiceForm";
+import API_BASE_URL from "../../config/api.js";
 
 const ServiceManager = () => {
     const [services, setServices] = useState([]);
@@ -7,7 +8,7 @@ const ServiceManager = () => {
     const [editingService, setEditingService] = useState(null);
     const fetchServices = async() => {
         const token = localStorage.getItem('token');
-        const res = await fetch('http://localhost:5000/services', {
+        const res = await fetch(`${API_BASE_URL}/services`, {
             headers: {
                 Authorization: `Bearer ${token}`
             }

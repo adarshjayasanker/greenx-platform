@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import API_BASE_URL from "../../config/api.js";
 
 const Login = () => {
     const [email, setEmail] = useState("");
@@ -8,7 +9,7 @@ const Login = () => {
     const handleSubmit = async(e) => {
         e.preventDefault();
         try{
-           const res = await fetch('http://localhost:5000/auth/login', {
+           const res = await fetch(`${API_BASE_URL}/auth/login`, {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem('token')}`,

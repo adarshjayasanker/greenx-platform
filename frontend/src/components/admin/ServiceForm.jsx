@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import API_BASE_URL from "../../config/api.js";
 
 const generateSlug = (text) => {
     return text.toLowerCase().trim().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
@@ -111,7 +112,7 @@ const ServiceForm = ({onSuccess, existingService}) => {
             body.append('galleryImages', img);
         });
 
-        const url = existingService ? `http://localhost:5000/services/${existingService._id}` : `http://localhost:5000/services/createservice`;
+        const url = existingService ? `${API_BASE_URL}/services/${existingService._id}` : `${API_BASE_URL}/services/createservice`;
         const method = existingService ? 'PATCH' : 'POST';
 
         const response = await fetch(url, {

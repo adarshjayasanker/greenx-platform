@@ -5,12 +5,13 @@ import Footer from '../components/Footer.jsx';
 import WhatsappButton from '../components/WhatsappButton.jsx';
 import MobileContactBar from '../components/MobileContactBar.jsx';
 import ServiceContext from '../context/ServiceContext.jsx';
+import API_BASE_URL from '../config/api.js';
 
 const PublicLayout = () => {
     const [services, setServices] = useState([]);
     const fetchServices = async() => {
         try{
-           const res = await fetch('http://localhost:5000/services'); 
+           const res = await fetch(`${API_BASE_URL}/services`); 
            if(res?.ok){
             const data = await res.json();
             setServices(data?.services);
