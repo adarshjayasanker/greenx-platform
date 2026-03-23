@@ -10,10 +10,12 @@ import API_BASE_URL from '../config/api.js';
 const PublicLayout = () => {
     const [services, setServices] = useState([]);
     const fetchServices = async() => {
+        console.log(API_BASE_URL);
         try{
            const res = await fetch(`${API_BASE_URL}/services`); 
            if(res?.ok){
             const data = await res.json();
+            console.log(data);
             setServices(data?.services);
            }
         }catch(error){
