@@ -50,11 +50,11 @@ const Footer = () => {
                     <ul className="space-y-4">
                         <li className="flex items-center gap-3">
                             <Phone size={18}/>
-                            +91 8714593851
+                            +91 6238094939
                         </li>
                         <li className="flex items-center gap-3">
                             <Mail size={18}/>
-                            info@greenx.com
+                            greenxpcs@gmail.com
                         </li>
                         <li className="flex items-center gap-3">
                             <MapPin size={18}/>
