@@ -6,9 +6,13 @@ import WhatsappButton from '../components/WhatsappButton.jsx';
 import MobileContactBar from '../components/MobileContactBar.jsx';
 import ServiceContext from '../context/ServiceContext.jsx';
 import API_BASE_URL from '../config/api.js';
+import { LeadProvider} from '../context/LeadContext.jsx';
+import LeadModal from '../components/LeadModal.jsx';
 
 const PublicLayout = () => {
+
     const [services, setServices] = useState([]);
+
     const fetchServices = async() => {
         console.log(API_BASE_URL);
         try{
@@ -22,21 +26,26 @@ const PublicLayout = () => {
             console.error(error);
         }
     }
+
     useEffect(() => {
         fetchServices();
     }, [])
+
     return(
-        <ServiceContext.Provider value={{services}}>
-            <div className='flex flex-col min-h-screen'>
-                <Navbar/>
-                <main className='flex-grow'>
-                    <Outlet/>
-                </main>
-                <Footer/>
-                <WhatsappButton/>
-                <MobileContactBar/>
-            </div>
-        </ServiceContext.Provider>
+        <LeadProvider>
+            <ServiceContext.Provider value={{services}}>
+                <div className='flex flex-col min-h-screen'>
+                    <Navbar/>
+                    <main className='flex-grow'>
+                        <Outlet/>
+                    </main>
+                    <Footer/>
+                    <WhatsappButton/>
+                    <MobileContactBar/>
+                    <LeadModal/>
+                </div>
+            </ServiceContext.Provider>
+        </LeadProvider>
     )
 };
 

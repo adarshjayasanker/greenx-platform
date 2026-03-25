@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom"
 
-const CTASection = () => {
+const CTASection = ({openLeadModal}) => {
     return(
         <section className="relative py-24 bg-green-700 text-white overflow-hidden">
             <div className="absolute -top-20 -left-20 w-72 h-72 bg-screen-500 opacity-30 blur-3xl"></div>
@@ -11,7 +11,7 @@ const CTASection = () => {
                     Book a free inspection with Greenx Pest Control experts and get safe, professional pest treatment for your home or business.
                 </p>
                 <div className="mt-10 flex justify-center gap-6 flex-wrap">
-                    <Link to='/request-service' className="bg-white text-green-700 px-8 py-4 rounded-lg font-semibold hover:bg-gray-100 transition">Request Service</Link>
+                    <button onClick={() => openLeadModal({source: "HOME_HERO"})} className='bg-green-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-green-700'>Request Inspection</button>
                     <Link to='/contact' className="border border-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-green-700 transition">Contact Us</Link>
                 </div>
                 <p className="mt-8 text-sm text-green-200">Fast Response • Professional Technicians • Affordable Pricing</p>

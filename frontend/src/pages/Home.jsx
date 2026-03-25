@@ -9,18 +9,20 @@ import ServiceSection from "../components/ServiceSection.jsx";
 import TestimonialsSection from "../components/TestimonialsSection.jsx";
 import WhyChooseSection from "../components/WhyChooseSection.jsx";
 import { useServices } from "../context/ServiceContext.jsx";
+import { useLead } from "../context/LeadContext.jsx";
 
 const Home = () => {
     const {services} = useServices();
+    const {openLeadModal} = useLead();
     return(
         <div>
-            <Hero/>
+            <Hero openLeadModal={openLeadModal}/>
             <FeaturedService/>
             <ServiceSection services={services}/>
             <WhyChooseSection/>
             <GallerySection/>
             <TestimonialsSection/>
-            <CTASection/>
+            <CTASection openLeadModal={openLeadModal}/>
             <ServiceCoverageSection/>
         </div>
     )

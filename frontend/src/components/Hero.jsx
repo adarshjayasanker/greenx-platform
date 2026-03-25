@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import GoogleRating from "./GoogleRating";
 
-const Hero = () => {
+const Hero = ({openLeadModal}) => {
     return(
         <section className="bg-gradient-to-b from-green-400 to-white pt-45 pb-24">
             <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
@@ -12,8 +12,8 @@ const Hero = () => {
                         Protect your family and property with expert treatment from GreenX.
                     </p>
                     <div className="mt-8 flex gap-4">
-                        <Link to='/request-service' className='bg-green-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-green-700'>Request Inspection</Link>
-                        <Link to='/contacte' className="border border-green-600 text-green-600 px-6 py-3 rounded-lg font-medium hover:bg-green-100">Contact Us</Link>
+                        <button onClick={() => openLeadModal({source: "HOME_HERO"})} className='bg-green-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-green-700'>Request Inspection</button>
+                        <Link to='/contact' className="border border-green-600 text-green-600 px-6 py-3 rounded-lg font-medium hover:bg-green-100">Contact Us</Link>
                     </div>
                     <GoogleRating/>
                 </div>

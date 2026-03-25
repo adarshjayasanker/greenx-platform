@@ -7,9 +7,9 @@ const {createLead, updateLead, getLeads, deleteLead} = leadController;
 
 const leadRoutes = express.Router();
 
-leadRoutes.post('/newlead', createValidation, validate, createLead);
+leadRoutes.post('/new', createValidation, validate, createLead);
 
-leadRoutes.get('/leads', protect, getLeads);
+leadRoutes.get('/', protect, getLeads);
 leadRoutes.patch('/lead/:id', protect, updateLead);
 leadRoutes.delete('/lead/:id', protect, deleteLead)
 

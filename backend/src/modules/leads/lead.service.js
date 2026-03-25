@@ -1,6 +1,6 @@
 import Lead from "./lead.model.js";
 
-export const createLead = async(data) => {
+export const createLeadService = async(data) => {
     return await Lead.create(data);
 };
 

@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import API_BASE_URL from "../config/api.js";
+import { useLead } from "../context/LeadContext.jsx";
 
 const ServiceDetail = () => {
 
     const {slug} = useParams();
 
     const [service, setService] = useState(null);
+
+    const {openLeadModal} = useLead();
 
     useEffect(() => {
         fetchService();
@@ -24,6 +27,9 @@ const ServiceDetail = () => {
         }
     }
 
+    console.log(service);
+    
+
     return(
         <div className="bg-gradient-to-b from-white to-green-400 pt-32 pb-24">
             <section className="relative h-[75vh] overflow-hidden">
@@ -32,7 +38,10 @@ const ServiceDetail = () => {
                     <div className="max-w-6xl mx-auto px-6 text-white">
                         <h1 className="text-5xl md:text-6xl font-bold leading-tight">{service?.title}</h1>
                         <p className="mt-6 text-lg md:text-xl max-w-xl text-gray-200">{service?.shortDescription}</p>
-                        <button className="mt-8 bg-green-600 px-8 py-3 rounded-lg font-semibold hover:bg-green-700 transition shadow-lg hover:scale-105">Request Service</button>
+                        <button className="mt-8 bg-green-600 px-8 py-3 rounded-lg font-semibold hover:bg-green-700 transition shadow-lg hover:scale-105" onClick={() => openLeadModal({
+                        serviceId: service?._id,
+                        source: "SERVICE_PAGE",
+                    })}>Request Service Now</button>
                     </div>
                 </div>
             </section>
@@ -85,7 +94,10 @@ const ServiceDetail = () => {
                 <div className="relative z-10">
                     <h2 className="text-4xl font-bold">Need This Service?</h2>
                     <p className="mt-4 text-lg text-green-100">Get Professional help from Greenx experts today.</p>
-                    <button className="mt-8 bg-white text-green-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition shadow-lg hover:scale-105">Request Service Now</button>
+                    <button className="mt-8 bg-white text-green-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition shadow-lg hover:scale-105" onClick={() => openLeadModal({
+                        serviceId: service?._id,
+                        source: "SERVICE_PAGE",
+                    })}>Request Service Now</button>
                 </div>
             </section>
         </div>

@@ -1,65 +1,64 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { useLead } from "../context/LeadContext";
+import ServiceContext from "../context/ServiceContext";
 import API_BASE_URL from "../config/api";
+import ServiceDropdown from "./ServiceDropdown";
 
-const LeadForm = ({serviceId = null}) => {
-
+const LeadForm = () => {
+    const {leadData, closeLeadModal} = useLead();
+    const {services} = useContext(ServiceContext);
     const [form, setForm] = useState({
         name: "",
         phone: "",
-        email: "",
         location: "",
+        serviceRequested: leadData?.serviceId || "",
         message: "",
     });
-
     const [loading, setLoading] = useState(false);
-
     const handleChange = (e) => {
         setForm({...form, [e.target.name]: e.target.value});
     };
-
     const handleSubmit = async(e) => {
         e.preventDefault();
-        setLoading(true);
+        if(!form.name || !form.phone) return alert("Required fields missing");
         try{
-           const res = await fetch(`${API_BASE_URL}/leads`, {
+           setLoading(true);
+           const res = await fetch(`${API_BASE_URL}/leads/new`, {
             method: "POST",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
             },
             body: JSON.stringify({
                 ...form,
-                serviceRequested: serviceId,
-            }),
+                source: leadData.source,
+            })
            });
            if(res.ok){
+            closeLeadModal();
+            console.log(res)
             alert("We will contact you shortly!");
-            setForm({
-                name: "",
-                phone: "",
-                email: "",
-                location: "",
-                message: "",
-            })
            }
         }catch(error){
             console.error(error);
-            alert("Something went wrong");
         }finally{
             setLoading(false);
         }
     }
-
-
+    const selectedService = services?.find((s) => s._id === form.serviceRequested);
     return(
-        <form className="space-y-4" onSubmit={handleSubmit}>
-            <input name="name" placeholder="Your Name" required onChange={handleChange} value={form.name} />
-            <input name="phone" placeholder="Phone Number" required onChange={handleChange} value={form.phone} />
-            <input name="email" placeholder="Email" onChange={handleChange} value={form.email} />
-            <input type="location" placeholder="Location" onChange={handleChange} value={form.location} />
-            <textarea name="message" placeholder="Describe your issue" onChange={handleChange} value={form.message} />
-            <button disabled={loading}>
-                {loading ? "Submitting..." : "Request Service"}
-            </button>
+        <form onSubmit={handleSubmit}className="space-y-4">
+            <h2 className="text-xl font-semibold">Request Service</h2>
+            {form.serviceRequested ? (
+                <p className="text-sm text-gray-600">Service: <strong>{selectedService?.title}</strong></p>
+            ) : (
+                <ServiceDropdown services={services} value={form.serviceRequested} onChange={(value) => setForm((prev) => ({...prev, serviceRequested: value}))}/>
+            )}
+            <input name="name" placeholder="Your Name" onChange={handleChange} className="w-full border p-2 rounded" />
+            <input name="phone" placeholder="Phone Number" onChange={handleChange} className="w-full border p-2 rounded" />
+            <input name="email" placeholder="Email" onChange={handleChange} className="w-full border p-2 rounded" />
+            <input name="location" placeholder="Location" onChange={handleChange} className="w-full border p-2 rounded" />
+            <textarea name="message" placeholder="Message" onChange={handleChange} className="w-full border p-2 rounded"/>
+            <button type="submit" disabled={loading} className="w-full bg-green-600 text-white py-2 rounded">{loading ? "Submitting" : "Submit Request"}</button>
         </form>
     )
 };
