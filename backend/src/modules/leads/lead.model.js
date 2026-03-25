@@ -7,7 +7,8 @@ const leadSchema = new mongoose.Schema({
     },
     phone: {
         type: String,
-        required: true
+        required: true,
+        trim: true,
     },
     email: {
         type: String
@@ -21,6 +22,10 @@ const leadSchema = new mongoose.Schema({
     },
     message: {
         type: String,
+    },
+    source: {
+        type: String,
+        default: "website"
     },
     status: {
         type: String,

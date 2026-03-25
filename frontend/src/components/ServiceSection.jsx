@@ -2,6 +2,7 @@ import ServiceCard from "./ServiceCard";
 import {motion} from 'framer-motion';
 import {Bird, Rat, Bug, ShieldCheck} from 'lucide-react';
 import { useEffect, useState } from "react";
+import ServiceCardSkeleton from "./skeletons/ServiceCardSkeleton";
 
 const containerVariants = {
     hidden: {},
@@ -33,7 +34,7 @@ const ServiceSection = ({services}) => {
                         featured={service.featured}
                         />
                     ))}
-                </motion.div> : <p className="text-sm text-gray-500">Loading...</p>}
+                </motion.div> : <ServiceCardSkeleton/>}
             </div>
         </section>
     )
