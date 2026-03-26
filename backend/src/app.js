@@ -3,20 +3,16 @@ import cors from 'cors';
 
 import authRouter from './modules/auth/auth.routes.js';
 import serviceRoutes from './modules/services/service.routes.js';
-import leadRoutes from './modules/leads/lead.routes.js';
+
 import testimonialRouter from './modules/testimonials/testimonial.routes.js';
 
 import errorHandler from './middleware/errorMiddleware.js';
+import leadRoutes from './modules/leads/lead.routes.js';
 
 const app = express();
 
 app.use(cors({
-    origin: [
-        "http://localhost:5173",
-        "https://www.greenxpcs.com",
-        "https://greenxpcs.com"
-    ],
-    credentials: true,
+    origin: "*"
 }));
 
 app.use(express.json());
