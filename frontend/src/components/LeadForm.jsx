@@ -2,10 +2,12 @@ import { useContext, useState } from "react";
 import { useLead } from "../context/LeadContext";
 import ServiceContext from "../context/ServiceContext";
 import API_BASE_URL from "../config/api";
-import ServiceDropdown from "./ServiceDropdown";
+import ServiceDropdown from "./ServiceDropdown.jsx";
+import { useToast } from "../context/ToastContext.jsx";
 
 const LeadForm = () => {
     const {leadData, closeLeadModal} = useLead();
+    const {showToast} = useToast();
     const {services} = useContext(ServiceContext);
     const [form, setForm] = useState({
         name: "",
@@ -22,7 +24,10 @@ const LeadForm = () => {
         console.log(API_BASE_URL);
         
         e.preventDefault();
-        if(!form.name || !form.phone) return alert("Required fields missing");
+        if(!form.name || !form.phone){
+            showToast({message: "Please fill required fields", type: "error"});
+            return;
+        }
         try{
            setLoading(true);
            const res = await fetch(`${API_BASE_URL}/leads`, {
@@ -38,10 +43,10 @@ const LeadForm = () => {
            if(res.ok){
             closeLeadModal();
             console.log(res)
-            alert("We will contact you shortly!");
+            showToast({message: "We will contact you shortly. Thankyou!", type: "Success"})
            }
         }catch(error){
-            console.error(error);
+            showToast({message: "Something went wrong. Please try again", type: "error"});
         }finally{
             setLoading(false);
         }

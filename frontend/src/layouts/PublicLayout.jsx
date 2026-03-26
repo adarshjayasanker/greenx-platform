@@ -8,6 +8,7 @@ import ServiceContext from '../context/ServiceContext.jsx';
 import API_BASE_URL from '../config/api.js';
 import { LeadProvider} from '../context/LeadContext.jsx';
 import LeadModal from '../components/LeadModal.jsx';
+import { ToastProvider } from '../context/ToastContext.jsx';
 
 const PublicLayout = () => {
 
@@ -32,20 +33,22 @@ const PublicLayout = () => {
     }, [])
 
     return(
-        <LeadProvider>
-            <ServiceContext.Provider value={{services}}>
-                <div className='flex flex-col min-h-screen'>
-                    <Navbar/>
-                    <main className='flex-grow'>
-                        <Outlet/>
-                    </main>
-                    <Footer/>
-                    <WhatsappButton/>
-                    <MobileContactBar/>
-                    <LeadModal/>
-                </div>
-            </ServiceContext.Provider>
-        </LeadProvider>
+        <ToastProvider>
+            <LeadProvider>
+                <ServiceContext.Provider value={{services}}>
+                    <div className='flex flex-col min-h-screen'>
+                        <Navbar/>
+                        <main className='flex-grow'>
+                            <Outlet/>
+                        </main>
+                        <Footer/>
+                        <WhatsappButton/>
+                        <MobileContactBar/>
+                        <LeadModal/>
+                    </div>
+                </ServiceContext.Provider>
+            </LeadProvider>
+        </ToastProvider>
     )
 };
 
