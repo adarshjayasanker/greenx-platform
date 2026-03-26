@@ -9,6 +9,13 @@ const leadRoutes = express.Router();
 
 leadRoutes.post('/new', createValidation, validate, createLead);
 
+console.log("active");
+
+leadRoutes.get('/test', (req, res) => {
+  res.send("Lead route working");
+});
+
+
 leadRoutes.get('/', protect, getLeads);
 leadRoutes.patch('/lead/:id', protect, updateLead);
 leadRoutes.delete('/lead/:id', protect, deleteLead)
