@@ -19,6 +19,8 @@ const LeadForm = () => {
         setForm({...form, [e.target.name]: e.target.value});
     };
     const handleSubmit = async(e) => {
+        console.log(API_BASE_URL);
+        
         e.preventDefault();
         if(!form.name || !form.phone) return alert("Required fields missing");
         try{
