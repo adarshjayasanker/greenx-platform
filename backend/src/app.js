@@ -11,7 +11,12 @@ import errorHandler from './middleware/errorMiddleware.js';
 const app = express();
 
 app.use(cors({
-    origin: "*"
+    origin: [
+        "http://localhost:5173",
+        "https://www.greenxpcs.com",
+        "https://greenxpcs.com"
+    ],
+    credentials: true,
 }));
 
 app.use(express.json());
