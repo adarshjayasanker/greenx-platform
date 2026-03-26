@@ -25,7 +25,7 @@ const LeadForm = () => {
         if(!form.name || !form.phone) return alert("Required fields missing");
         try{
            setLoading(true);
-           const res = await fetch(`${API_BASE_URL}/leads/new`, {
+           const res = await fetch(`${API_BASE_URL}/leads`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
