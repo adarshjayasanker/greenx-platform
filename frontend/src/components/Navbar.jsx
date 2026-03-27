@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { useServices } from "../context/ServiceContext.jsx";
+import BRAND from "../config/brand.js";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
@@ -80,7 +81,7 @@ const Navbar = () => {
             to="/"
             className="text-2xl sm:text-3xl font-bold text-green-900 shrink-0"
           >
-            GreenX
+            {BRAND.shortName}
           </Link>
 
           {/* Desktop nav */}

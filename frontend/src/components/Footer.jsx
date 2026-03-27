@@ -1,12 +1,13 @@
 import { Link } from "react-router-dom";
 import {Phone, Mail, MapPin} from 'lucide-react'
+import BRAND from "../config/brand.js";
 
 const Footer = () => {
     return(
         <footer className="bg-gray-900 text-gray-300 pt-16 pb-20">
             <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 lg:grid-cols-4 gap-12">
                 <div>
-                    <h3 className="text-2xl font-bold text-white">GreenX</h3>
+                    <h3 className="text-2xl font-bold text-white">{BRAND.fullName}</h3>
                     <p className="mt-4 text-gray-400">Professional pest control services for homes and businesses in Kerela.
                         Safe, effective and affordable pest management solutions.
                     </p>
