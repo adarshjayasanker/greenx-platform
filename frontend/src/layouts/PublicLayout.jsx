@@ -17,11 +17,17 @@ const PublicLayout = () => {
     const fetchServices = async() => {
         console.log(API_BASE_URL);
         try{
-           const res = await fetch(`${API_BASE_URL}/services`); 
-           if(res?.ok){
-            const data = await res.json();
-            console.log(data);
-            setServices(data?.services);
+            const cached = localStorage.getItem('services');
+            if(cached){
+                setServices(JSON.parse(cached));
+            }
+
+            const res = await fetch(`${API_BASE_URL}/services`); 
+            if(res?.ok){
+                const data = await res.json();
+                console.log(data);
+                setServices(data?.services);
+                localStorage.setItem('services', JSON.stringify(data?.services));
            }
         }catch(error){
             console.error(error);
