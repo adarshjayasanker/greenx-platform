@@ -12,14 +12,20 @@ import { ToastProvider } from '../context/ToastContext.jsx';
 
 const PublicLayout = () => {
 
+    const CACHE_KEY = "services_cache";
+
     const [services, setServices] = useState([]);
 
+
     const fetchServices = async() => {
-        console.log(API_BASE_URL);
         try{
-            const cached = localStorage.getItem('services');
+            const cached = localStorage.getItem(CACHE_KEY);
             if(cached){
-                setServices(JSON.parse(cached));
+                const {data, timestamp} = JSON.parse(cached);
+                const isValid = Date.now() - timestamp < 1000 * 60 * 10;
+                if(isValid){
+                    setServices(data);
+                }
             }
 
             const res = await fetch(`${API_BASE_URL}/services`); 
@@ -27,7 +33,7 @@ const PublicLayout = () => {
                 const data = await res.json();
                 console.log(data);
                 setServices(data?.services);
-                localStorage.setItem('services', JSON.stringify(data?.services));
+                localStorage.setItem(CACHE_KEY, JSON.stringify({data: data?.services, timestamp: Date.now()}));
            }
         }catch(error){
             console.error(error);

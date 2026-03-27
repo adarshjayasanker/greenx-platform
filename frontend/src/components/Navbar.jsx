@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { useServices } from "../context/ServiceContext.jsx";
-import BRAND from "../config/brand.js";
+import { useLead } from "../context/LeadContext.jsx";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
@@ -10,6 +10,7 @@ const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const dropdownRef = useRef(null);
   const closeTimer = useRef(null);
+  const {openLeadModal} = useLead()
 
   const { services } = useServices();
 
@@ -81,7 +82,7 @@ const Navbar = () => {
             to="/"
             className="text-2xl sm:text-3xl font-bold text-green-900 shrink-0"
           >
-            {BRAND.shortName}
+            GreenX
           </Link>
 
           {/* Desktop nav */}
@@ -194,13 +195,8 @@ const Navbar = () => {
           </nav>
 
           {/* Desktop CTA */}
-          <Link
-            to="/request-service"
-            className="hidden md:inline-block bg-green-600 hover:bg-green-700 active:bg-green-800 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 shrink-0"
-          >
-            Request Service
-          </Link>
-
+          
+          <button onClick={() => openLeadModal({source: "HOME_HERO"})} className='hidden md:inline-block bg-green-600 hover:bg-green-700 active:bg-green-800 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 shrink-0'>Request Service</button>
           {/* Hamburger */}
           <button
             aria-label={mobileMenu ? "Close menu" : "Open menu"}
