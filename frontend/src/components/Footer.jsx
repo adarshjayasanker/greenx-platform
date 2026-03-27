@@ -65,7 +65,7 @@ const Footer = () => {
                 </div>
             </div>
             <div className="border-t border-gray-800 mt-12 pt-6 text-center text-gray-500 text-sm">
-                © {new Date().getFullYear()} Greenx Pest Control & Bird Netting Services. All rights reserved.
+                © {new Date().getFullYear()} Greenx Pest Control & Bird Netting Solutions LLP. All rights reserved.
             </div>
         </footer>
     )

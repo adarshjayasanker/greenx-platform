@@ -13,7 +13,7 @@ const Contact = () => {
             </section>
             <section className="max-w-6xl mx-auto px-6 mt-16 grid md:grid-cols-2 gap-12">
                 <div className="bg-white p-6 rounded-2xl shadow-md">
-                    <LeadForm isPage/>
+                    <LeadForm/>
                 </div>
                 <div className="space-y-6">
                     <div className="bg-white p-6 rounded-xl shadow-sm">
